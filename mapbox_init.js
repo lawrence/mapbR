@@ -111,7 +111,7 @@ function getVariables(){
   $('head').append('<style> .row { margin-right: initial; margin-left: initial; } h1 { font-size: initial; } h2 { font-size: initial; } </style>');
 
   // Creating input minutes or seconds filter for map:
-  if(isNanN($("#time_unit").val()) == 'false'){
+  if(isNaN($("#time_unit").val()) == 'false'){
 
     // For minutes!
     if($("#time_unit").val() == "minutes"){
