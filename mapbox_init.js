@@ -1,6 +1,6 @@
 // (F) newMap: Creates a new map backdrop on HTML page. Only for initializing.
 function newMap(lat, long, zoom_num){
-  mapboxgl.accessToken = "undefined"
+  mapboxgl.accessToken = 'undefined';
 
   var map = new mapboxgl.Map({
     container: 'map',
