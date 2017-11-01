@@ -1,0 +1,23 @@
+<div id="content-main">
+  <h1>mapbR: Generated MapBox Map</h1>
+
+  <div class='session'>
+    <h2>Number of Occurrences</h2>
+    <div class='row colors'></div>
+    <div class='row labels'></div>
+  </div>
+
+  <div class='session' id='sliderbar'>
+    <h2>Time Interval: <label id='active-time'>12:00:00</label></h2>
+    <input id='newSlider' class='row' type='range' range="min" min='0' max='86399' step="1"/>
+  </div>
+
+  <button onclick="hideConsole()" class="btn btn-info" id = "hideButton">Hide</button>
+  <button onclick="mainMenu()" class="btn btn-success" id = "hideButton">Main Menu</button>
+
+</div>
+
+<button onclick="showConsole()" class="btn btn-info" id = "showButton" style="display: none">Show</button>
+
+<script src= "mapbox_init.js"></script>
+<script src="createFilter.js"></script>
