@@ -1,6 +1,6 @@
 // (F) newMap: Creates a new map backdrop on HTML page. Only for initializing.
-function newMap(lat, long, zoom_num, aToken){
-  mapboxgl.accessToken = aToken
+function newMap(lat, long, zoom_num){
+  mapboxgl.accessToken = "undefined"
 
   var map = new mapboxgl.Map({
     container: 'map',
@@ -111,7 +111,7 @@ function getVariables(){
   $('head').append('<style> .row { margin-right: initial; margin-left: initial; } h1 { font-size: initial; } h2 { font-size: initial; } </style>');
 
   // Creating input minutes or seconds filter for map:
-  if(isNaN($("#time_unit").val()) == 'false'){
+  if(isNaN($("#time_unit").val()) == "false"){
 
     // For minutes!
     if($("#time_unit").val() == "minutes"){
@@ -209,10 +209,9 @@ function seconds2HMS(input_second) {
 
 // --- Below are initializers for the HTML page: --- //
 // Map placeholer for init_UI:
-defaultToken = 'pk.eyJ1IjoiMTJwYXJrbCIsImEiOiJjaXllemhvYmEwMHF3MzVrNTA5djg0NnJsIn0.5pHqYmljwlmbl9_w-KDGxg';
 
 // Initial default map called for aesthetics, encapsulated into a function so that the initializer is only ran once:
 
 function runOnce() {
-  newMap(40.7128,-74.0059,10,defaultToken);
+  newMap(40.7128,-74.0059,10);
 }
