@@ -1,6 +1,6 @@
 // (F) newMap: Creates a new map backdrop on HTML page. Only for initializing.
-function newMap(lat, long, zoom_num){
-  mapboxgl.accessToken = 'undefined';
+function newMap(lat, long, zoom_num, aToken){
+  mapboxgl.accessToken = aToken;
 
   var map = new mapboxgl.Map({
     container: 'map',
@@ -162,7 +162,7 @@ function hideConsole(){
 function showConsole(){
   $("#showButton").hide()
   $("#console").css("opacity","1");
-  $("#console").css("width","65%");
+  $("#console").css("width","260%");
   $("#content-main").show();
 }
 
@@ -208,10 +208,10 @@ function seconds2HMS(input_second) {
 }
 
 // --- Below are initializers for the HTML page: --- //
-// Map placeholer for init_UI:
 
 // Initial default map called for aesthetics, encapsulated into a function so that the initializer is only ran once:
+var defaultToken = "pk.eyJ1IjoiMTJwYXJrbCIsImEiOiJjaXllemhvYmEwMHF3MzVrNTA5djg0NnJsIn0.5pHqYmljwlmbl9_w-KDGxg";
 
 function runOnce() {
-  newMap(40.7128,-74.0059,10);
+  newMap(40.7128,-74.0059,10,defaultToken);
 }
