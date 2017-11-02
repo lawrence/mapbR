@@ -214,6 +214,8 @@ var defaultToken = "pk.eyJ1IjoiMTJwYXJrbCIsImEiOiJjaXllemhvYmEwMHF3MzVrNTA5djg0N
 
 function runOnce() {
   newMap(40.7128,-74.0059,10,defaultToken);
+
+  // CSS fix to overloaded styles from .less
   $("h1").css("font-size","24px");
   $("h1").css("margin-top","8px");
 }
