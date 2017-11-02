@@ -214,4 +214,5 @@ var defaultToken = "pk.eyJ1IjoiMTJwYXJrbCIsImEiOiJjaXllemhvYmEwMHF3MzVrNTA5djg0N
 
 function runOnce() {
   newMap(40.7128,-74.0059,10,defaultToken);
+  $("h1").css("font-size="24px"");
 }
