@@ -1,0 +1,56 @@
+<p>In this example I pulled a huge CSV with data of crimes that happened from 2013-2015. I took all those incidents and stripped the dates and counted all the occurences of what time of day these crimes were reported to show when certain parts of the city was dangerous.</p>
+<p>More info on the steps taken can be found: <a href="">here.</a></p>
+
+<div class="jumbotron" style="padding-top: 20px; padding-bottom: 20px;">
+  <p>Mapbox Settings:</p>
+  <div class="form-group">
+    <input id="a_token" type="text" class="form-control" name="a_token1" placeholder="Access Token" value ="pk.eyJ1IjoiMTJwYXJrbCIsImEiOiJjaXllemhvYmEwMHF3MzVrNTA5djg0NnJsIn0.5pHqYmljwlmbl9_w-KDGxg">
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" name="map_id"  id="map_id1"  placeholder="Map URL" value="NYPD_Complaint_Data">
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" name="map_url"  id="map_url1"  placeholder="Map ID" value="mapbox://12parkl.61uo1wcn">
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" name="s_layer" id="s_layer1" placeholder="Source Layer" value="NYPD_Complaint_Data_Historic-811nyd">
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" name="prop" id="prop1" placeholder="Property" value="occ">
+  </div>
+
+  <p>Slider filter settings:</p>
+  <div style="display:flex">
+    <div class="form-group">
+      <input type="text" class="form-control" name="time_value" id="time_value1" placeholder="Amount Split" value="1">
+    </div>
+
+    <div class="form-group">
+      <select class="form-control" name="time_unit"
+      id="time_unit1" placeholder="Time Unit" value="minutes">
+        <option>minutes</option>
+        <option>seconds</option>
+      </select>
+    </div>
+  </div>
+
+  <p>Map view start settings:</p>
+  <div style ="display:flex">
+      <div class="form-group">
+        <input type="text" class="form-control" id="lat_input1" placeholder="Latitude" value="40.7128">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="lon_input1" placeholder="Longitude" value="-74.0059">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="zoom_input1" placeholder="Zoom Number" value="10">
+      </div>
+  </div>
+
+  <button onclick="plugExample(); return false;" class="btn btn-success">Fill in on MapbR!</button>
+
+</div>

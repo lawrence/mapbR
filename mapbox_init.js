@@ -64,15 +64,17 @@ function loadMap(mapid, mapurl, maplayer, mapprop, t_unit, t_split){
       var val = parseFloat(e.target.value);
 
       if (t_unit == "seconds"){
-        var cHMS = seconds2HMS(val)
+        var cHMS = seconds2HMS(val);
         map.setFilter(mapid, ['==', 'time', cHMS]);
         document.getElementById('active-time').innerText = cHMS;
+        console.log('seconds ' + val);
       }
 
       if (t_unit == "minutes"){
-        var cHMS = minutes2HMS(val)
+        var cHMS = minutes2HMS(val);
         map.setFilter(mapid, ['==', 'time', cHMS]);
         document.getElementById('active-time').innerText = cHMS;
+        console.log('minutes ' + val);
       }
     });
 
@@ -104,38 +106,48 @@ function loadMap(mapid, mapurl, maplayer, mapprop, t_unit, t_split){
 
 // (F) getVariables: Scraping init page for variables and placing them into the right functions to print out user MapBox data.
 function getVariables(){
-  // Creates map from new_map.js as new_map.html
-  $("#console").load("new_map.html");
 
-  // JQuery .load() function's CSS keeps getting overloaded with Bootstrap's .less files. Quick style tags to fix it.
-  $('head').append('<style> .row { margin-right: initial; margin-left: initial; } h1 { font-size: initial; } h2 { font-size: initial; } </style>');
-
-  // Creating input minutes or seconds filter for map:
-  if(isNaN($("#time_unit").val()) == "false"){
-
-    // For minutes!
-    if($("#time_unit").val() == "minutes"){
-      var time_unit = $("#time_unit").val();
-      var input_val = "<input id='newSlider' class='row' type='range' range='min' min='0' max='"+ 1439 + "' step='" + time_unit + "'/>";
-
-      $("newSlider").load(input_val);
-    }
-
-    // For seconds! (only two options available...)
-    else {
-      var time_unit = $("#time_unit").val();
-      var input_val = "<input id='newSlider' class='row' type='range' range='min' min='0' max='"+ 86399 + "' step='" + time_unit + "'/>";
-
-      $("newSlider").load(input_val);
-    }
+  // Error handling on blank form:
+  if($("input").val() == ""){
+    alert("You have to fill out the form!");
+    return;
   }
 
   else {
-    alert("You didn't specify a time unit split that is divisible by seconds or minutes! Default slider will show every second of the day.");
-  }
+    // Creates map from new_map.js as new_map.html
+    $("#console").load("new_map.html");
 
-  // Loads and centers the map backdrop:
-  loadMap($("#map_url").val(),$("#map_url").val(),$("#s_layer").val(),$("#prop").val(),$("#time_unit").val(),$("#time_value").val());
+    // JQuery .load() function's CSS keeps getting overloaded with Bootstrap's .less files. Quick style tags to fix it.
+    $('head').append('<style> .row { margin-right: initial; margin-left: initial; } h1 { font-size: initial; } h2 { font-size: initial; } </style>');
+
+    // Creating input minutes or seconds filter for map:
+    if(!isNaN(parseInt($("#time_value").val()))){
+
+      // For minutes!
+      if($("#time_unit").val() == "minutes"){
+        console.log("minutes")
+        var time_unit = $("#time_unit").val();
+        var input_val = "<input id='newSlider' class='row' type='range' range='min' min='0' max='"+ 1439 + "' step='" + time_unit + "'/>";
+        $("newSlider").load(input_val);
+      }
+
+      // For seconds! (only two options available...)
+      else {
+        var time_unit = $("#time_unit").val();
+        var input_val = "<input id='newSlider' class='row' type='range' range='min' min='0' max='"+ 86399 + "' step='" + time_unit + "'/>";
+
+        $("newSlider").load(input_val);
+      }
+    }
+
+    else {
+      alert(isNaN(parseInt($("#time_value").val())));
+      //alert("You didn't specify a time unit split that is divisible by seconds or minutes! Default slider will show every second of the day.");
+    }
+
+    // Loads and centers the map backdrop:
+    loadMap($("#map_url").val(),$("#map_url").val(),$("#s_layer").val(),$("#prop").val(),$("#time_unit").val(),$("#time_value").val());
+  }
 }
 
 // (F) tutorialLoad: Loads tutorial and example HTML on tutorial button click.
@@ -154,18 +166,21 @@ function mainMenu(){
 function hideConsole(){
   $("#content-main").hide();
   $("#showButton").show();
+  $("#col-sm-4").css("height","0px");
   $("#console").css("opacity","0.75");
-  $("#console").css("width","92px");
+  $("#console").css("width","95px");
 }
 
 // (F) showConsole: Restore console back to normal.
 function showConsole(){
   $("#showButton").hide()
+  $("#col-sm-4").css("height","10px");
   $("#console").css("opacity","1");
-  $("#console").css("width","260%");
+  $("#console").css("width","300px");
   $("#content-main").show();
 }
 
+// Table of colors for occurence heat colors.
 var colorList = [
   [1, '#F8DE5F'],
   [2, '#FAD35B'],
@@ -184,13 +199,13 @@ function minutes2HMS(input_minute){
   var min_num = parseInt(input_minute, 10);
   var hours = Math.floor(min_num / 60);
   var minutes = Math.floor((min_num - (hours * 60)) / 60);
-  var seconds = sec_num - (hours * 60) - (minutes * 60);
+  var seconds = min_num - (hours * 60) - (minutes * 60);
 
   // Formatting in case numbers need a 0 below 10.
   if (hours   < 10) {hours   = "0"+hours;}
   if (minutes < 10) {minutes = "0"+minutes;}
   if (seconds < 10) {seconds = "0"+seconds;}
-  return hours+':'+minutes+':'+seconds;
+  return hours+':'+seconds+':'+minutes;
 }
 
 // (F) seconds2HMS: creating conversions b/w seconds to HMS format.

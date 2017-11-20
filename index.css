@@ -39,16 +39,42 @@ a {
 #console {
   position: absolute;
   overflow: auto;
-  width: 250px;
+  width: 300px;
   margin: 10px;
   padding: 1em 1em;
   background-color: white;
 }
 
-@media screen and (max-width: 260px) {
-    #console {
-        width:65%;
-    }
+p.hidden {
+  visibility: hidden;
+  font-size: 0px;
+}
+
+.sticky-top {
+  top: 20px;
+  background-color: white;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.col-sm-2 {
+  visibility: hidden;
+}
+
+.col-sm-6 {
+  visibility: hidden;
+}
+
+#console-tutorial {
+  visibility: hidden;
+  position: relative;
+  overflow: scroll;
+  max-height: 550px;
+  margin: 10px;
+  padding: 1em 1em;
+  background-color: white;
 }
 
 .session {
@@ -56,7 +82,6 @@ a {
 }
 
 .row {
-  height: 12px;
   width: 100%;
 }
 

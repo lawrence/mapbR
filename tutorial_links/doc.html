@@ -1,0 +1,165 @@
+<div class="bd-example">
+  <div class="row">
+    <div class="col-4">
+      <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column">
+        <a class="navbar-brand" href="#">Tutorial</a>
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link" href="#item-1">MapBox</a>
+          <nav class="nav nav-pills flex-column">
+            <a class="nav-link ml-3 my-1" href="#item-1-1">Data Initializing</a>
+            <a class="nav-link ml-3 my-1" href="#item-1-2">Creating Maps</a>
+          </nav>
+          <a class="nav-link" href="#item-2">mapbR</a>
+          <nav class="nav nav-pills flex-column">
+            <a class="nav-link ml-3 my-1" href="#item-2-1">Properties</a>
+          </nav>
+        </nav>
+      </nav>
+    </div>
+
+    <div class="col-8" style="height:400px; overflow:scroll;">
+      <div data-spy="scroll" data-target="#navbar-example3" data-offset="0" class="scrollspy-example-2">
+        <h3 id="item-0">Documentation:</h4>
+          <p>Below in this tutorial we’ll go from start to finish on creating maps in MapBox to actually using MapBr.</p>
+
+          <h4 id="item-1">MapBox</h4>
+          <p>In this section below are the steps from what data plots can be used for mapbR, how to set it up for use in MapBox.</p>
+
+          <h5 id="item-1-1">Data Initializing</h5>
+          <p>When creating your maps you can enter a large subset of coordinates to visually plot data. Also make sure your final CSV size is <b>no larger than 1GB</b>. This is for only the free version of Mapbox.</p>
+          <p>Make sure that the csv is in first normal form; has all entires are indivisible. Example below shows the difference between a CSV in first normal and not in first normal form.</p>
+
+          <p><b>Don't!</b> (Not in 1NF)</p>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>40.7687121</td>
+                  <td>-73.966227</td>
+                  <td>12:03:00,12:10:01,02:38:12</td>
+                </tr>
+                <tr>
+                  <td>40.75896</td>
+                  <td>-73.985195</td>
+                  <td>19:09:88</td>
+                </tr>
+                <tr>
+                  <td>40.766372</td>
+                  <td>-73.957579</td>
+                  <td>23:00:09,15:04:23</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p><b>Do!</b> (In 1NF)</p>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>40.7687121</td>
+                  <td>-73.966227</td>
+                  <td>12:03:00</td>
+                </tr>
+                <tr>
+                  <td>40.7687121</td>
+                  <td>-73.966227</td>
+                  <td>12:10:01</td>
+                </tr>
+                <tr>
+                  <td>40.7687121</td>
+                  <td>-73.966227</td>
+                  <td>02:38:12</td>
+                </tr>
+                <tr>
+                  <td>40.75896</td>
+                  <td>-73.985195</td>
+                  <td>19:09:88</td>
+                </tr>
+                <tr>
+                  <td>40.766372</td>
+                  <td>-73.957579</td>
+                  <td>23:00:09</td>
+                </tr>
+                <tr>
+                  <td>40.766372</td>
+                  <td>-73.957579</td>
+                  <td>15:04:23</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p><b>(!)</b><i> Also another thing to note is that make sure when you have your columns, name your time column <b>'time'</b> otherwise mapbR's filter input bar will not filter for time values correctly!</i></p>
+
+          <p><b>(!)</b><i> Also please label your columns on the top of the CSV file as well! (i.e. time,lat,lon)</i></p>
+
+          <p><b>(!)</b><i> Format for 'time' column is <b>xx:xx:xx</b>.</i></p>
+
+          <p><i>For some help with making the right files to upload to work with mapbR you can look <a href="https://github.com/lawrence/independent_study/tree/master/scripts">here</a> for some example Python scripts that I used during my independent study.</i></p>
+
+          <h5 id="item-1-2">Creating Maps</h5>
+          <p>Go to <a href="https://www.mapbox.com">MapBox</a> and create an account.</p>
+          <p>Then on the left side: <b>Tilesets > New Tileset > Upload.</b> This will let you upload your CSV file.</p>
+          <img src="tutorial_links/img/MB_1.png" style="width: 70%; height: 70%"></img>
+          <p class="hidden">...</p>
+
+          <p>Once MapBox finishes the export can go click the progress window or go into <b>Tilesets</b> to find the newly exported tileset. Make sure you check the Layer Details below the Preview and check that the columns are properly addressed and formatted.</p>
+
+          <p>Click to look edit your Tileset by <b>Add tileset to style</b> and choosing a style of your choice.
+          <img src="tutorial_links/img/MB_2.png" style="width: 50%; height: 50%"></img>
+          <p class="hidden">...</p>
+
+          <p>This will visualize all your data points on to a map and let you filter out for points.</p>
+          <img src="tutorial_links/img/MB_3.png" style="width: 70%; height: 70%"></img>
+          <p class="hidden">...</p>
+
+        <h4 id="item-2">mapbR</h4>
+        <p>Although Mapbox has its own section to visualize all coordinates on a map and filter for points, it still lacks a bit of interactivity with its filter and shareablity. Here's where mapbR comes in.</p>
+
+        <p>This section below will cover how to use mapbR after all the data is setup in Mapbox. You must store your data in MapBox in order to pull map data using mapbR!</p>
+          <h5 id="item-2-1">Properties (Form)</h5>
+          <p>So mapbR has a couple of different forms you need to fill in before you get to your html map. Here's where to get all of them. To see it in action head over to the Example tab.</p>
+          <div class="jumbotron" style="padding-top: 20px; padding-bottom: 20px;">
+            <h4>MapBox Settings</h4>
+            <p>These are the properties to find your Mapbox maps off the Mapbox APIs.</p>
+
+            <div class="list-group">
+              <li class="list-group-item"><u><b>Access Token</u></b>: Go into <b>Account > Access Token > Create New Token</b>. Must have all 4 Public scopes checked. Copy and paste the string given.</li>
+              <li class="list-group-item"><u><b>Map URL</u></b>: This can be any name.</li>
+              <li class="list-group-item"><u><b>Map ID</u></b>: Go into <b>Tilesets</b> and then click into the Tileset you are using. Then on the right hand will be Map ID. Copy and paste the string below it. You <b>MUST</b> have <b>"mapbox://"</b> before the MapID!</li>
+              <li class="list-group-item"><u><b>Source Layer</u></b>: Go into <b>Tilesets</b> and then click into the Tileset you are using. Copy and paste the name. Likewise you can find it by going into the Tileset and right under Layer Details.</li>
+              <li class="list-group-item"><u><b>Property</u></b>: Go into <b>Tilesets</b> and then click into the Tileset you are using. Then under Layer details, choose the property (aka column too) name that you chose to count up your occurences. If you don't have any (i.e. because each plot can be a single occurence), put anything in there to bypass the blank error.</li>
+            </div>
+          </div>
+          <div class="jumbotron" style="padding-top: 20px; padding-bottom: 20px;">
+            <h4>Slider Filter Settings</h4>
+            <p>This part could be a bit confusing, but this is only for the slider on mapbR to filter out what happens at the time of day using the slider.</p>
+            <p>For example, if you want only points to show every 2 hours, then you would put:</p>
+            <p>   * <b>120</b> into <b>Amount Split</b>
+            <p>   * <b>Minutes</b> into <b>Time Unit</b></p>
+            <p>If you want every 1 minute 30 seconds per tick on the filter, then you would do 90 seconds.</p>
+            <p>Cool tip: you can hold the left or right arrow key on the slider to make it look like it's animating throughout the day.</p>
+          </div>
+          <div class="jumbotron" style="padding-top: 20px; padding-bottom: 20px;">
+            <h4>Map View Settings</h4>
+            <p>This is just simply where you want the map to be centered when you create the map. If the zoom level is increasing, it means it's getting closer and closer into the map.</p>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
