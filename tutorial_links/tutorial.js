@@ -41,5 +41,5 @@ function plugExample(){
   // Mapview Values:
   $("#lat_input").val("40.7128");
   $("#lon_input").val("-74.0059");
-  $("#zoom_input").val("10");
+  $("#zoom_input").val("12");
 }

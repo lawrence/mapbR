@@ -67,14 +67,14 @@ function loadMap(mapid, mapurl, maplayer, mapprop, t_unit, t_split){
         var cHMS = seconds2HMS(val);
         map.setFilter(mapid, ['==', 'time', cHMS]);
         document.getElementById('active-time').innerText = cHMS;
-        console.log('seconds ' + val);
+        //console.log('seconds ' + val);
       }
 
       if (t_unit == "minutes"){
         var cHMS = minutes2HMS(val);
         map.setFilter(mapid, ['==', 'time', cHMS]);
         document.getElementById('active-time').innerText = cHMS;
-        console.log('minutes ' + val);
+        //console.log('minutes ' + val);
       }
     });
 
@@ -120,29 +120,36 @@ function getVariables(){
     // JQuery .load() function's CSS keeps getting overloaded with Bootstrap's .less files. Quick style tags to fix it.
     $('head').append('<style> .row { margin-right: initial; margin-left: initial; } h1 { font-size: initial; } h2 { font-size: initial; } </style>');
 
+    // Loads and centers the map backdrop:
+    loadMap($("#map_url").val(),$("#map_url").val(),$("#s_layer").val(),$("#prop").val(),$("#time_unit").val(),$("#time_value").val());
+
     // Creating input minutes or seconds filter for map:
     if(!isNaN(parseInt($("#time_value").val()))){
 
       // For minutes!
       if($("#time_unit").val() == "minutes"){
-        console.log("minutes")
         var time_unit = $("#time_unit").val();
-        var input_val = "<input id='newSlider' class='row' type='range' range='min' min='0' max='"+ 1439 + "' step='" + time_unit + "'/>";
-        $("newSlider").load(input_val);
+
+        console.log("MINS");
+        //var input_val = "<input id='newSlider' class='row' type='range' range='min' min='0' max='1439' step='" + time_unit + "'/>";
+
+        $("#newSlider").attr('max','1439');
+        $("#newSlider").attr('step',time_unit);
+
+        //$("#newSlider").load(input_val);
       }
 
       // For seconds! (only two options available...)
       else {
         var time_unit = $("#time_unit").val();
-        var input_val = "<input id='newSlider' class='row' type='range' range='min' min='0' max='"+ 86399 + "' step='" + time_unit + "'/>";
-
-        $("newSlider").load(input_val);
+        var input_val = "<input id='newSlider' class='row' type='range' range='min' min='0' max='86399' step='" + time_unit + "'/>";
+        $("#newSlider").load(input_val);
       }
     }
 
     else {
-      alert(isNaN(parseInt($("#time_value").val())));
-      //alert("You didn't specify a time unit split that is divisible by seconds or minutes! Default slider will show every second of the day.");
+      //alert(isNaN(parseInt($("#time_value").val())));
+      alert("You didn't specify a time unit split that is divisible by seconds or minutes! Default slider will show every second of the day.");
     }
 
     // Loads and centers the map backdrop:
@@ -166,7 +173,7 @@ function mainMenu(){
 function hideConsole(){
   $("#content-main").hide();
   $("#showButton").show();
-  $("#col-sm-4").css("height","0px");
+  $(".col-sm-4").css("height","0px");
   $("#console").css("opacity","0.75");
   $("#console").css("width","95px");
 }
@@ -174,7 +181,7 @@ function hideConsole(){
 // (F) showConsole: Restore console back to normal.
 function showConsole(){
   $("#showButton").hide()
-  $("#col-sm-4").css("height","10px");
+  $(".col-sm-4").css("height","10px");
   $("#console").css("opacity","1");
   $("#console").css("width","300px");
   $("#content-main").show();

@@ -8,78 +8,119 @@
   <script src='https://api.mapbox.com/mapbox-gl-js/v0.33.1/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v0.33.1/mapbox-gl.css' rel='stylesheet' />
   <link rel="stylesheet" type="text/css" href="./index.css?version=101034">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
 
 <body>
   <div id='map' name ='map'></div>
   <body onload = "runOnce()">
 
-  <div id='console'>
-    <div id='content-main'>
-      <h1>mapbR: Mapbox Plotting</h1>
-      <p>Small tool rework from Mapbox tutorial to create shareable maps from Mapbox. More info @tutorial.</p>
+    <div class = "row">
+      <div class="col-sm-4">
+        <div id='console'>
+          <div id='content-main'>
+            <h1>mapbR: Mapbox Plotting</h1>
+            <p>Small tool rework from Mapbox tutorial to create shareable maps from Mapbox. More info @tutorial.</p>
 
-      <div class="form-group">
-        <input id="a_token" type="text" class="form-control" name="a_token" placeholder="Access Token">
-      </div>
+            <p>Mapbox Settings:</p>
+            <div class="form-group">
+              <input id="a_token" type="text" class="form-control" name="a_token" placeholder="Access Token">
+            </div>
 
-      <div class="form-group">
-        <input type="text" class="form-control" name="map_id"  id="map_id" value="Occ01__" placeholder="Map ID">
-      </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="map_id"  id="map_id"  placeholder="Map URL">
+            </div>
 
-      <div class="form-group">
-        <input type="text" class="form-control" name="map_url"  id="map_url" value="mx://.dqcphg2q" placeholder="Map URL">
-      </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="map_url"  id="map_url"  placeholder="Map ID">
+            </div>
 
-      <div class="form-group">
-        <input type="text" class="form-control" name="s_layer" id="s_layer" value="-18o4sb" placeholder="Source Layer">
-      </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="s_layer" id="s_layer" placeholder="Source Layer">
+            </div>
 
-      <div class="form-group">
-        <input type="text" class="form-control" name="prop" id="prop" value="occ_count" placeholder="Property">
-      </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="prop" id="prop" placeholder="Property">
+            </div>
 
-      <p>Slider filter settings:</p>
-      <div style="display:flex">
-        <div class="form-group">
-          <input type="text" class="form-control" name="time_value" id="time_value" placeholder="Time Split (must be divisible by 1 day)">
+            <p>Slider filter settings:</p>
+            <div style="display:flex">
+              <div class="form-group">
+                <input type="text" class="form-control" name="time_value" id="time_value" placeholder="Amount Split">
+              </div>
+
+              <div class="form-group">
+                <select class="form-control" name="time_unit"
+                id="time_unit" placeholder="Time Unit">
+                <option>seconds</option>
+                <option>minutes</option>
+              </select>
+            </div>
+          </div>
+
+          <p>Map view start settings:</p>
+          <div style ="display:flex">
+            <div class="form-group">
+              <input type="text" class="form-control" id="lat_input" placeholder="Latitude">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="lon_input" placeholder="Longitude">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="zoom_input" placeholder="Zoom Number">
+            </div>
+          </div>
+
+          <button onclick="getVariables(); return false;" class="btn btn-success">Submit</button>
+
+          <!-- openTutorial located in tutorial.js -->
+          <button onclick="openTutorial(); return false;" class="btn btn-default" id="button-tutorial">Tutorial</button>
+
+          <button onclick="hideConsole()" class="btn btn-info" id = "hideButton">Hide</button>
         </div>
 
-        <div class="form-group">
-          <select class="form-control" name="time_unit"
-          id="time_unit" placeholder="Time Unit">
-            <option>seconds</option>
-            <option>minutes</option>
-          </select>
+        <button onclick="showConsole()" class="btn btn-info" id = "showButton" style="display: none">Show</button>
+      </div>
+    </div>
+    <div class = "col-sm-2"></div>
+    <div class = "col-sm-6">
+      <div id="console-tutorial">
+        <div class="sticky-top">
+          <!-- <p class="hidden"> added more border up top for cleaner look to sticky top -->
+          <p class="hidden">...</p>
+
+          <button onclick = "closeTutorial(); return false;" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h1>Tutorial:</h1>
+          <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-secondary active" id="tut_home">
+              <input type="radio" name="options" id="tut_home" autocomplete="off" checked> Home
+            </label>
+            <label class="btn btn-secondary" id="tut_doc">
+              <input type="radio" name="options" id="tut_doc" autocomplete="off"> Documentation
+            </label>
+            <label class="btn btn-secondary" id="tut_example">
+              <input type="radio" name="options" id="tut_example" autocomplete="off"> Example
+            </label>
+          </div>
+          <p class="hidden">...</p>
         </div>
+        <div id="content-tutorial"></div>
       </div>
-
-      <p>Map view settings:</p>
-      <div style ="display:flex">
-          <div class="form-group">
-            <input type="text" class="form-control" id="lat_input" placeholder="Latitude">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="lon_input" placeholder="Longitude">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="zoom_input" placeholder="Zoom Number">
-          </div>
-      </div>
-
-      <button onclick="getVariables(); return false;" class="btn btn-default">Submit</button>
-      <button onclick="tutorialLoad(); return false;" class="btn btn-default" id="button-tutorial">Tutorial</button>
-
-      <button onclick="hideConsole()" class="btn btn-info" id = "hideButton">Hide</button>
     </div>
 
-    <button onclick="showConsole()" class="btn btn-info" id = "showButton" style="display: none">Show</button>
   </div>
-
   <script src="mapbox_init.js"></script>
+  <script src="tutorial_links/tutorial.js"></script>
 </body>
 
 </html>
