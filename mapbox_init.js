@@ -106,7 +106,6 @@ function loadMap(mapid, mapurl, maplayer, mapprop, t_unit, t_split){
 
 // (F) getVariables: Scraping init page for variables and placing them into the right functions to print out user MapBox data.
 function getVariables(){
-
   // Error handling on blank form:
   if($("input").val() == ""){
     alert("You have to fill out the form!");
@@ -114,36 +113,26 @@ function getVariables(){
   }
 
   else {
-    // Creates map from new_map.js as new_map.html
-    $("#console").load("new_map.html");
-
     // JQuery .load() function's CSS keeps getting overloaded with Bootstrap's .less files. Quick style tags to fix it.
     $('head').append('<style> .row { margin-right: initial; margin-left: initial; } h1 { font-size: initial; } h2 { font-size: initial; } </style>');
 
-    // Loads and centers the map backdrop:
-    loadMap($("#map_url").val(),$("#map_url").val(),$("#s_layer").val(),$("#prop").val(),$("#time_unit").val(),$("#time_value").val());
-
     // Creating input minutes or seconds filter for map:
     if(!isNaN(parseInt($("#time_value").val()))){
+      var time_val = parseInt($("#time_value").val());
 
       // For minutes!
       if($("#time_unit").val() == "minutes"){
-        var time_unit = $("#time_unit").val();
+        var myElem = document.getElementById('newSlider');
+        if (myElem === null) alert('does not exist!');
 
-        console.log("MINS");
-        //var input_val = "<input id='newSlider' class='row' type='range' range='min' min='0' max='1439' step='" + time_unit + "'/>";
-
-        $("#newSlider").attr('max','1439');
-        $("#newSlider").attr('step',time_unit);
-
-        //$("#newSlider").load(input_val);
+        $("#newSlider").attr("max","1439");
+        $("#newSlider").attr("step",time_val);
       }
 
       // For seconds! (only two options available...)
       else {
-        var time_unit = $("#time_unit").val();
-        var input_val = "<input id='newSlider' class='row' type='range' range='min' min='0' max='86399' step='" + time_unit + "'/>";
-        $("#newSlider").load(input_val);
+        $("#newSlider").attr("max","86399");
+        $("#newSlider").attr("step",time_val);
       }
     }
 
@@ -156,6 +145,12 @@ function getVariables(){
     loadMap($("#map_url").val(),$("#map_url").val(),$("#s_layer").val(),$("#prop").val(),$("#time_unit").val(),$("#time_value").val());
   }
 }
+
+function loadNewHTML(){
+  // Creates map from new_map.js as new_map.html
+  $("#console").load("new_map.html",getVariables());
+}
+
 
 // (F) tutorialLoad: Loads tutorial and example HTML on tutorial button click.
 function tutorialLoad(){
