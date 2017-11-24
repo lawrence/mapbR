@@ -12,14 +12,13 @@ In this example I have data of complaints in NYC from (I have a small snippet of
 (For some reason all of the data wasn't downloaded when I had tried to download it but since this is an example, the whole dataset isn't much needed.)
 
 Let's look at the data (column names w/ 1st row):
-``` - CMPLNT_NUM,CMPLNT_FR_DT,CMPLNT_FR_TM,CMPLNT_TO_DT,CMPLNT_TO_TM,RPT_DT,KY_CD,OFNS_DESC,PD_CD,PD_DESC,CRM_ATPT_CPTD_CD,LAW_CAT_CD,JURIS_DESC,BORO_NM,ADDR_PCT_CD,LOC_OF_OCCUR_DESC,PREM_TYP_DESC,PARKS_NM,HADEVELOPT,X_COORD_CD,Y_COORD_CD,Latitude,Longitude,Lat_Lon
-- 101109527,12/31/2015,23:45:00,,,12/31/2015,113,FORGERY,729,"FORGERY,ETC.,UNCLASSIFIED-FELO",COMPLETED,FELONY,N.Y. POLICE DEPT,BRONX,44,INSIDE,BAR/NIGHT CLUB,,,1007314,241257,40.828848333,-73.916661142,"(40.828848333, -73.916661142)"
-```
+    - CMPLNT_NUM,CMPLNT_FR_DT,CMPLNT_FR_TM,CMPLNT_TO_DT,CMPLNT_TO_TM,RPT_DT,KY_CD,OFNS_DESC,PD_CD,PD_DESC,CRM_ATPT_CPTD_CD,LAW_CAT_CD,JURIS_DESC,BORO_NM,ADDR_PCT_CD,LOC_OF_OCCUR_DESC,PREM_TYP_DESC,PARKS_NM,HADEVELOPT,X_COORD_CD,Y_COORD_CD,Latitude,Longitude,Lat_Lon
+    - 101109527,12/31/2015,23:45:00,,,12/31/2015,113,FORGERY,729,"FORGERY,ETC.,UNCLASSIFIED-FELO",COMPLETED,FELONY,N.Y. POLICE DEPT,BRONX,44,INSIDE,BAR/NIGHT CLUB,,,1007314,241257,40.828848333,-73.916661142,"(40.828848333, -73.916661142)"
 
 We know that since we want the noise of a given location we can afford to drop a lot of these columns. Luckily this data is already in first normal form (if it wasn't look at here for a script example: ), so let's start stripping out our data to this:
-``` - CMPLNT_FR_TM,Latitude,Longitude
-- 23:45:00,40.828848333,-73.916661142
-```
+    - CMPLNT_FR_TM,Latitude,Longitude
+    - 23:45:00,40.828848333,-73.916661142
+    
 We only need these three columns because we're not too interested in the details of the crime, but the fact that it was reported 'at this location, at this time.'
 
 Now let's use this script here to make this into a string and count up all the occurrences of that string. https://github.com/lawrence/independent_study/blob/master/scripts/occ.py
