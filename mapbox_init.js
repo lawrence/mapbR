@@ -116,7 +116,6 @@ function newConsole(val,unit){
   if(!isNaN(val)){
     // For minutes!
     if(unit == "minutes"){
-      console.log("MINS");
       $("#newSlider").attr("max","1439");
       $("#newSlider").attr("step",val);
     }
