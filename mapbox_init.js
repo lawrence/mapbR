@@ -104,114 +104,125 @@ function loadMap(mapid, mapurl, maplayer, mapprop, t_unit, t_split){
   });
 }
 
-// (F) getVariables: Scraping init page for variables and placing them into the right functions to print out user MapBox data.
-function getVariables(){
-  // Error handling on blank form:
+
+//(F) newConsole: needs to be its own function in order to wait for the new console to show up.
+function newConsole(val,unit){
+  // JQuery .load() function's CSS keeps getting overloaded with Bootstrap's .less files. Quick style tags to fix it.
+  $('head').append('<style> .row { margin-right: initial; margin-left: initial; } h1 { font-size: initial; } h2 { font-size: initial; } </style>');
+  console.log("newConsole val" + val);
+  console.log("newConsole uni" + unit);
+
+  // Creating input minutes or seconds filter for map:
+  if(!isNaN(val)){
+    // For minutes!
+    if(unit == "minutes"){
+      console.log("MINS");
+      $("#newSlider").attr("max","1439");
+      $("#newSlider").attr("step",val);
+    }
+
+    // For seconds! (only two options available...)
+    else {
+      $("#newSlider").attr("max","86399");
+      $("#newSlider").attr("step",val);
+    }
+  }
+
+  // Defaults to
+  else {
+    alert("You didn't specify a time unit split that is divisible by seconds or minutes! Default slider will show every second of the day.");
+  }
+}
+
+
+// (F) loadNew: loads up the new user input map & menu.
+function loadNew(){
+
+  // If anything on the form is blank then refuses to open.
   if($("input").val() == ""){
     alert("You have to fill out the form!");
     return;
   }
 
+  // Otherwise run...
   else {
-    // JQuery .load() function's CSS keeps getting overloaded with Bootstrap's .less files. Quick style tags to fix it.
-    $('head').append('<style> .row { margin-right: initial; margin-left: initial; } h1 { font-size: initial; } h2 { font-size: initial; } </style>');
-
-    // Creating input minutes or seconds filter for map:
-    if(!isNaN(parseInt($("#time_value").val()))){
-      var time_val = parseInt($("#time_value").val());
-
-      // For minutes!
-      if($("#time_unit").val() == "minutes"){
-        var myElem = document.getElementById('newSlider');
-        if (myElem === null) alert('does not exist!');
-
-        $("#newSlider").attr("max","1439");
-        $("#newSlider").attr("step",time_val);
-      }
-
-      // For seconds! (only two options available...)
-      else {
-        $("#newSlider").attr("max","86399");
-        $("#newSlider").attr("step",time_val);
-      }
-    }
-
-    else {
-      //alert(isNaN(parseInt($("#time_value").val())));
-      alert("You didn't specify a time unit split that is divisible by seconds or minutes! Default slider will show every second of the day.");
-    }
-
-    // Loads and centers the map backdrop:
     loadMap($("#map_url").val(),$("#map_url").val(),$("#s_layer").val(),$("#prop").val(),$("#time_unit").val(),$("#time_value").val());
+
+    // Getting newConsole()'s parameters before form leaves the console div
+    var time_val = parseInt($("#time_value").val());
+    var time_unit = $("#time_unit").val();
+
+    // Runs callback function sliderCheck() to wait on new_map.html to load up
+    $("#console").load("new_map.html", function sliderCheck() {
+      if($('#newSlider').is(':visible')){
+        newConsole(time_val,time_unit);
+      }
+      else {
+        setTimeout(sliderCheck(), 50);
+      }
+    });
   }
 }
 
-function loadNewHTML(){
-  // Creates map from new_map.js as new_map.html
-  $("#console").load("new_map.html",getVariables());
-}
+  // (F) tutorialLoad: Loads tutorial and example HTML on tutorial button click.
+  function tutorialLoad(){
+    $("#console").load("tutorial.html");
+  }
 
+  // (F) mainMenu: button to make console revert back to landing menu
+  function mainMenu(){
+    $("#console").load('menu.html');
+    $('head').append('<style> h1 { font-size: 36px; } </style>');
+  }
 
-// (F) tutorialLoad: Loads tutorial and example HTML on tutorial button click.
-function tutorialLoad(){
-  $("#console").load("tutorial.html");
-}
+  // (F) hideConsole: Hide most of console for viewability.
+  function hideConsole(){
+    $("#content-main").hide();
+    $("#showButton").show();
+    $(".col-sm-4").css("height","0px");
+    $("#console").css("opacity","0.75");
+    $("#console").css("width","95px");
+  }
 
-// (F) mainMenu: button to make console revert back to landing menu
-function mainMenu(){
-  $("#console").load('menu.html');
-  // Fixing past head style append from getVariables().
-  $('head').append('<style> h1 { font-size: 36px; } </style>');
-}
+  // (F) showConsole: Restore console back to normal.
+  function showConsole(){
+    $("#showButton").hide()
+    $(".col-sm-4").css("height","10px");
+    $("#console").css("opacity","1");
+    $("#console").css("width","300px");
+    $("#content-main").show();
+  }
 
-// (F) hideConsole: Hide most of console for viewability.
-function hideConsole(){
-  $("#content-main").hide();
-  $("#showButton").show();
-  $(".col-sm-4").css("height","0px");
-  $("#console").css("opacity","0.75");
-  $("#console").css("width","95px");
-}
+  // Table of colors for occurence heat colors.
+  var colorList = [
+    [1, '#F8DE5F'],
+    [2, '#FAD35B'],
+    [3, '#FBC759'],
+    [4, '#FBBC58'],
+    [5, '#FAB158'],
+    [6, '#F8A659'],
+    [7, '#F59C5B'],
+    [8, '#F0925D'],
+    [9, '#EA8960'],
+    [10, '#E48062']
+  ];
 
-// (F) showConsole: Restore console back to normal.
-function showConsole(){
-  $("#showButton").hide()
-  $(".col-sm-4").css("height","10px");
-  $("#console").css("opacity","1");
-  $("#console").css("width","300px");
-  $("#content-main").show();
-}
+  // (F) minutes2HMS: creating conversions b/w minutes to HMS format.
+  function minutes2HMS(input_minute){
+    var min_num = parseInt(input_minute, 10);
+    var hours = Math.floor(min_num / 60);
+    var minutes = Math.floor((min_num - (hours * 60)) / 60);
+    var seconds = min_num - (hours * 60) - (minutes * 60);
 
-// Table of colors for occurence heat colors.
-var colorList = [
-  [1, '#F8DE5F'],
-  [2, '#FAD35B'],
-  [3, '#FBC759'],
-  [4, '#FBBC58'],
-  [5, '#FAB158'],
-  [6, '#F8A659'],
-  [7, '#F59C5B'],
-  [8, '#F0925D'],
-  [9, '#EA8960'],
-  [10, '#E48062']
-];
+    // Formatting in case numbers need a 0 below 10.
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    return hours+':'+seconds+':'+minutes;
+  }
 
-// (F) minutes2HMS: creating conversions b/w minutes to HMS format.
-function minutes2HMS(input_minute){
-  var min_num = parseInt(input_minute, 10);
-  var hours = Math.floor(min_num / 60);
-  var minutes = Math.floor((min_num - (hours * 60)) / 60);
-  var seconds = min_num - (hours * 60) - (minutes * 60);
-
-  // Formatting in case numbers need a 0 below 10.
-  if (hours   < 10) {hours   = "0"+hours;}
-  if (minutes < 10) {minutes = "0"+minutes;}
-  if (seconds < 10) {seconds = "0"+seconds;}
-  return hours+':'+seconds+':'+minutes;
-}
-
-// (F) seconds2HMS: creating conversions b/w seconds to HMS format.
-function seconds2HMS(input_second) {
+  // (F) seconds2HMS: creating conversions b/w seconds to HMS format.
+  function seconds2HMS(input_second) {
     var sec_num = parseInt(input_second, 10);
     var hours   = Math.floor(sec_num / 3600);
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
@@ -222,17 +233,17 @@ function seconds2HMS(input_second) {
     if (minutes < 10) {minutes = "0"+minutes;}
     if (seconds < 10) {seconds = "0"+seconds;}
     return hours+':'+minutes+':'+seconds;
-}
+  }
 
-// --- Below are initializers for the HTML page: --- //
+  // --- Below are initializers for the HTML page: --- //
 
-// Initial default map called for aesthetics, encapsulated into a function so that the initializer is only ran once:
-var defaultToken = "pk.eyJ1IjoiMTJwYXJrbCIsImEiOiJjaXllemhvYmEwMHF3MzVrNTA5djg0NnJsIn0.5pHqYmljwlmbl9_w-KDGxg";
+  // Initial default map called for aesthetics, encapsulated into a function so that the initializer is only ran once:
+  var defaultToken = "pk.eyJ1IjoiMTJwYXJrbCIsImEiOiJjaXllemhvYmEwMHF3MzVrNTA5djg0NnJsIn0.5pHqYmljwlmbl9_w-KDGxg";
 
-function runOnce() {
-  newMap(40.7128,-74.0059,10,defaultToken);
+  function runOnce() {
+    newMap(40.7128,-74.0059,10,defaultToken);
 
-  // CSS fix to overloaded styles from .less
-  $("h1").css("font-size","24px");
-  $("h1").css("margin-top","8px");
-}
+    // CSS fix to overloaded styles from .less
+    $("h1").css("font-size","24px");
+    $("h1").css("margin-top","8px");
+  }
